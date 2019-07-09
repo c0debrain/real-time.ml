@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MarketChartComponent } from './market-chart.component';
+import { TweetsLineChartComponent } from './tweets-line-chart.component';
 
-describe('MarketChartComponent', () => {
-  let component: MarketChartComponent;
-  let fixture: ComponentFixture<MarketChartComponent>;
+describe('TweetsLineChartComponent', () => {
+  let component: TweetsLineChartComponent;
+  let fixture: ComponentFixture<TweetsLineChartComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MarketChartComponent ]
+      declarations: [ TweetsLineChartComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MarketChartComponent);
+    fixture = TestBed.createComponent(TweetsLineChartComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

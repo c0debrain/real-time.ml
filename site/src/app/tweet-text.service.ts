@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient,HttpErrorResponse,HttpHeaders} from '@angular/common/http';
-import { environment } from '../environments/environment';
+import {environment} from '../environments/environment';
 import {TweetText} from './tweet-text';
 import { Subject, from, throwError, Observable } from  'rxjs';
 import { catchError, retry } from 'rxjs/operators';
@@ -11,7 +11,7 @@ import * as socketio from 'socket.io-client';
 })
 export class TweetTextService {
 
-  private baseUrl =  environment.api_root_endpoint;
+  private baseUrl =  environment.api_base_url;
   constructor(private http: HttpClient) { }
 
   getInitialTweetTextStatus(): Observable<TweetText> {

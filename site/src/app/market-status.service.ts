@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import { environment } from '../environments/environment';
+import {environment} from '../environments/environment'
 import {MarketPrice} from './market-price';
 import { Subject, from } from  'rxjs';
 import * as socketio from 'socket.io-client';
@@ -10,7 +10,7 @@ import * as socketio from 'socket.io-client';
 })
 export class MarketStatusService {
 
-  private baseUrl =  environment.api_root_endpoint;
+  private baseUrl =  environment.api_base_url;
   constructor(private httpClient: HttpClient) { }
 
   getInitialMarketStatus() {

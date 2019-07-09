@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  api_root_endpoint: "https://simple-twitter-stats.herokuapp.com"
+  api_base_url: "https://simple-twitter-stats.herokuapp.com"
 };
