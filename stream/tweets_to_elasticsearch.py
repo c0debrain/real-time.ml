@@ -48,13 +48,13 @@ def delete_old():
         "query": {
             "range": {
                 "timestamp_ms": {
-                    "lte": "now-5m",
+                    "to": "now-5m",
                 }
             }
         }
     }
     r = requests.post(ES_URI + ES_INDEX + '/_delete_by_query?conflicts=proceed', json=data)
-    print("Deleted:", r.json()['_all']['total'])
+    print("Deleted response:", r.json())
 
 TRACK = [
     'election',
