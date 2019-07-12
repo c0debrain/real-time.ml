@@ -25,9 +25,6 @@ function updateTweet(callback) {
             },
         },
         function (error, response, body) {
-            console.log(error);
-            console.log(response.statusCode);
-            console.log(body);
             if (!error && response.statusCode == 200) {
                 if (body.hits.hits.length > 0){
                     var current = new Date();

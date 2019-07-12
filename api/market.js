@@ -23,11 +23,12 @@ function updateMarket(callback) {
 
         {
             json: {
+                "from" : 0, "size" : 0,
                 "query": {
                     "range": {
                         "timestamp_ms": {
-                            "from": "now-5m",
-                            "to": "now-4m"
+                            "gte": "now-2m",
+                            "lte": "now-1m"
                         }
                     }
                 }
@@ -35,8 +36,8 @@ function updateMarket(callback) {
         },
         function (error, response, body) {
             if (!error && response.statusCode == 200) {
-                console.log(body.hits.total);
-                close = body.hits.total;
+                console.log(body.hits.total.value);
+                close = body.hits.total.value;
                 var current = new Date();
                 
                 marketPositions.unshift({
