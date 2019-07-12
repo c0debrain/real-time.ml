@@ -1,0 +1,12 @@
+version: '3'
+services:
+  twitter_to_redis:
+    build: ./twitter_to_redis
+    env_file:
+      - ../../stream.env.list
+  redis_to_elasticsearch:
+    build: ./redis_to_elasticsearch
+    env_file:
+      - ../../stream.env.list
+  redis:
+    image: "redis:alpine"
