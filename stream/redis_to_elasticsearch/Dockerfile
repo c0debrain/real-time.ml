@@ -3,5 +3,5 @@ WORKDIR /code
 RUN apk add --no-cache gcc musl-dev linux-headers
 COPY /stream/redis_to_elasticsearch/requirements.txt ./requirements.txt
 RUN pip install -r requirements.txt
-COPY . .
+COPY /stream/redis_to_elasticsearch/* .
 CMD ["python", "-u", "redis_to_elasticsearch.py"]
