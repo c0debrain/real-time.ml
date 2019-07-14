@@ -10,3 +10,4 @@ services:
       - ../../stream.env.list
   redis:
     image: "redis:alpine"
+    command: [sh, -c, "rm -f /data/dump.rdb && redis-server"]  # disable persistence

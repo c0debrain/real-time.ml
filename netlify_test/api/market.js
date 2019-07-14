@@ -1,5 +1,5 @@
 var request = require('request');
-
+var dotenv = require('dotenv').config({ path: '../../../stream.env.list' });
 var now = new Date();
 const marketPositions = [
     { "date": now.toISOString(), "close": 10, "open": 10 }
@@ -19,7 +19,7 @@ function updateMarket(callback) {
         close = Math.abs(marketPositions[0].close - diff);
     }
     request.get(
-        process.env.ES_URL + '/_search',
+        process.env.ES_URI + '/_search',
 
         {
             json: {

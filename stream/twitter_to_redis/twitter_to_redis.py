@@ -29,25 +29,26 @@ api = twitter.Api(consumer_key=CONSUMER_KEY,
                     access_token_key=ACCESS_TOKEN_KEY,
                     access_token_secret=ACCESS_TOKEN_SECRET)
 
-count = 0
 t = time.perf_counter()
 
 cache = redis.Redis(host='redis', port=6379)
 
+count = 0
+interval_end_time = time.time() + 60
 while True:
     try:
         for line in api.GetStreamFilter(track=TRACK, languages=LANGUAGES):
             try:
                 cache.rpush("mylist",json.dumps(line))
                 count += 1
-                if count % 60 == 0:
-                    elapsed_time = time.perf_counter() - t
-                    t = time.perf_counter()
+                if time.time() > interval_end_time:
                     print("Count:",count)
-                    print("Elaspsed Time:",elapsed_time)
-                    print("Throughput:",60/elapsed_time,"tweets per second")
+                    print("Throughput:",count/60,"tweets per second")
+                    interval_end_time = time.time() + 60
+                    count = 0
             except redis.exceptions.ConnectionError as exc:
-                pass
+                print(exc)
+                print("Redis connection error in twitter_to_redis.py.")
     except twitter.error.TwitterError as e:
         print(e)
         print("Waiting 90 seconds before trying to reconnect.")

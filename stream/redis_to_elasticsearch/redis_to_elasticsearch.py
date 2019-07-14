@@ -73,6 +73,8 @@ while True:
         incoming_tweets = []
         redis_list = "mylist"
         num_items = 100
+        print("REDIS Used memory:",cache.info()['used_memory_human'])
+        print("REDIS Used memory RSS:",cache.info()['used_memory_rss_human'])
         redis_pipeline = cache.pipeline()
         redis_pipeline.multi()
         redis_pipeline.lrange(redis_list, 0, num_items - 1)
@@ -87,7 +89,6 @@ while True:
             if count > 60:
                 count = 0
                 delete_old()
-                print("Count:",count)
         else:
             print("Response:",response)
             initalize_es()
