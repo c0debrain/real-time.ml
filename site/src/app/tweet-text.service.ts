@@ -15,14 +15,14 @@ export class TweetTextService {
   constructor(private http: HttpClient) { }
 
   getInitialTweetTextStatus(): Observable<TweetText> {
-    return this.http.get<TweetText>(`${this.baseUrl}/api/tweet_text`);
+    return this.http.get<TweetText>(`${this.baseUrl}/api/v1/tweet_text_all`);
   }
 
   getUpdates() {
     let socket = socketio(this.baseUrl);
     let tweettextSub = new Subject<TweetText>();
     let tweettextSubObservable = from(tweettextSub);
-    socket.on('tweet_text', (fullTweet) => {
+    socket.on('tweet_text_all', (fullTweet) => {
       let tweettextStatus = new TweetText(fullTweet);
       tweettextSub.next(tweettextStatus);
     });

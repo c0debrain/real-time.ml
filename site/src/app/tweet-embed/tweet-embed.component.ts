@@ -20,7 +20,6 @@ export class TweetEmbedComponent {
   }
 
   ngOnChanges() {
-    console.log("ok");
     if (this.tweetId){
       // Don't ask....
       this.first = (this.first > 2) ? this.first = 1 : this.first += 1;
@@ -48,7 +47,6 @@ export class TweetEmbedComponent {
     }
   }
   ngAfterViewInit() {
-    console.log(this.tweetStatus);
     // @ts-ignore
     twttr.widgets.load();
   }

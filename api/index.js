@@ -1,8 +1,6 @@
 const app = require('express')();
 const http = require('http').Server(app);
-const market = require('./market');
-const tweet_biden = require('./tweet-biden');
-const tweet_text = require('./tweet-text');
+const tweets = require('./tweets');
 const io = require('socket.io')(http);
 
 const port = process.env.PORT || 3000;
@@ -13,45 +11,33 @@ app.use((req, res, next) => {
     next();
 });
 
-app.get('/api/market', (req, res) => {
-    res.send(market.marketPositions);
+app.get('/api/v1/tweet_counts_all', (req, res) => {
+    res.send(tweets.counts.all);
 });
 
-app.get('/api/tweet_text', (req, res) => {
-    res.send(tweet_text.tweets[0]);
+app.get('/api/v1/tweet_counts_biden', (req, res) => {
+    res.send(tweets.counts.biden);
 });
 
-app.get('/api/v2/tweet_biden', (req, res) => {
-    res.send(tweet_text.tweets[0]);
+app.get('/api/v1/tweet_counts_trump', (req, res) => {
+    res.send(tweets.counts.trump);
+});
+
+app.get('/api/v1/tweet_text_all', (req, res) => {
+    res.send(tweets.text.all[0]);
 });
 
 setInterval(function () {
-    market.updateMarket(() => {
-        io.sockets.emit('market', market.marketPositions[0]);
-        console.log(market.marketPositions[0]);
+    tweets.updateTweets(() =>{
+        io.sockets.emit('tweet_counts_all', tweets.counts.all[0]);
+        io.sockets.emit('tweet_counts_biden', tweets.counts.biden[0]);
+        io.sockets.emit('tweet_counts_trump', tweets.counts.trump[0]);
+        io.sockets.emit('tweet_text_all', tweets.text.all[0]);
     });
-    console.log(market.marketPositions[0]);
 }, 1000);
-
-setInterval(function () {
-    tweet_biden.updateTweets(() => {
-        io.sockets.emit('tweet_biden', tweet_biden.tweets_biden[0]);
-        console.log(tweet_biden.tweets_biden[0]);
-    });
-    console.log(tweet_biden.tweets_biden[0]);
-}, 1000);
-
-setInterval(function () {
-    tweet_text.updateTweet(() => {
-        io.sockets.emit('tweet_text', tweet_text.tweets[0]);
-        console.log(tweet_text.tweets[0]);
-    });
-    console.log(tweet_text.tweets[0]);
-}, 5000);
-
 
 io.on('connection', function (socket) {
-    console.log('a user connected');
+    console.log('A user has connected.');
 });
 
 http.listen(port, () => {

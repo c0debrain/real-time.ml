@@ -9,11 +9,15 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { TweetsLineChartComponent } from './tweets-line-chart/tweets-line-chart.component';
+import { TweetsLineChartBidenComponent } from './tweets-line-chart-biden/tweets-line-chart-biden.component';
+import { TweetsLineChartTrumpComponent } from './tweets-line-chart-trump/tweets-line-chart-trump.component';
 @NgModule({
   declarations: [
     AppComponent,
     TweetEmbedComponent,
-    TweetsLineChartComponent
+    TweetsLineChartComponent,
+    TweetsLineChartBidenComponent,
+    TweetsLineChartTrumpComponent
   ],
   imports: [
     BrowserModule,

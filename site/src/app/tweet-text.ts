@@ -4,7 +4,7 @@ export class TweetText {
     user_screen_name: string;
 
     constructor(fullTweet: object) {
-        let tweet = fullTweet['tweet']['_source']
+        let tweet = fullTweet['_source']
         this.text = tweet['text'];
         this.id_str = tweet['id_str'];
         this.user_screen_name = tweet['user']['screen_name'];

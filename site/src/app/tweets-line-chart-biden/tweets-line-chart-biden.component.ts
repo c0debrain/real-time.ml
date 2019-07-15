@@ -1,31 +1,31 @@
 import { ChangeDetectionStrategy, Component, OnInit, Input } from '@angular/core';
-import { multi} from './data';
+import { multi } from './data';
 import { TweetCount } from '../tweet-count';
 
 @Component({
-  selector: 'app-tweets-line-chart',
-  templateUrl: './tweets-line-chart.component.html',
-  styleUrls: ['./tweets-line-chart.component.scss'],
+  selector: 'app-tweets-line-chart-biden',
+  templateUrl: './tweets-line-chart-biden.component.html',
+  styleUrls: ['./tweets-line-chart-biden.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TweetsLineChartComponent {
+export class TweetsLineChartBidenComponent {
   @Input()
-  marketStatus: TweetCount[];
+  tweetCounts: TweetCount[];
 
   single: any[];
   multi: any[];
 
   ngOnChanges() {
-    if (this.marketStatus) { // Variable undefined on first ngOnChanges call
+    if (this.tweetCounts) { // Variable undefined on first ngOnChanges call
       this.updateChart();
     }
   }
   
   updateChart() {
-    let now = new Date(this.marketStatus[0].date);
+    let now = new Date(this.tweetCounts[0].date);
     this.multi[0].series.push({
       "name": now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds(),
-      "value": this.marketStatus[0].num_tweets
+      "value": this.tweetCounts[0].num_tweets
     });
     if (multi[0].series.length > 50) {
       multi[0].series.shift();
@@ -51,7 +51,7 @@ export class TweetsLineChartComponent {
   autoScale = true;
   
   constructor() {
-    Object.assign(this, { multi})   
+    Object.assign(this, { multi })   
   }
   
   onSelect(event) {

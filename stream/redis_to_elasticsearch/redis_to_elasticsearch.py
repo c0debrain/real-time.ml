@@ -32,7 +32,12 @@ def initalize_es():
 
 def delete_old():
     r = requests.get(ES_URI + ES_INDEX + "/_stats/")
-    es_size = r.json()['_all']['total']['store']['size_in_bytes']
+    try:
+        es_size = r.json()['_all']['total']['store']['size_in_bytes']
+    except KeyError as e:
+        print("KEY ERROR!", e)
+        print("Errored request:", r.text)
+        return
     print("Index size:",es_size)
     if es_size < ES_MAX_SIZE:
         return
