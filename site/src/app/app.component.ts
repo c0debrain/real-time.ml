@@ -8,6 +8,7 @@ import { TweetCount } from './tweet-count'
 import { faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { faLink } from '@fortawesome/free-solid-svg-icons';
+import { faPause } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -18,11 +19,13 @@ export class AppComponent {
   faLinkedinIn = faLinkedinIn;
   faGithub = faGithub;
   faLink = faLink;
+  faPause = faPause;
   marketStatus: TweetCount[];
   marketStatusToPlot: TweetCount[];
   
   bidenTweetCount: TweetCount[];
   bidenTweetCountToPlot: TweetCount[];
+  
   trumpTweetCount: TweetCount[];
   trumpTweetCountToPlot: TweetCount[];
 

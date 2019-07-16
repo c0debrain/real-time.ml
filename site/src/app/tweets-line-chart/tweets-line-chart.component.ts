@@ -23,6 +23,7 @@ export class TweetsLineChartComponent {
   
   updateChart() {
     let now = new Date(this.marketStatus[0].date);
+    console.log(now.toISOString());
     this.multi[0].series.push({
       "name": now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds(),
       "value": this.marketStatus[0].num_tweets

@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "site/src/app"
+		},
+		{
+			"path": "api"
+		},
+		{
+			"path": "stream"
+		}
+	],
+	"settings": {}
+}

@@ -37,7 +37,7 @@ count = 0
 interval_end_time = time.time() + 60
 while True:
     try:
-        for line in api.GetStreamFilter(track=TRACK, languages=LANGUAGES):
+        for line in api.GetStreamFilter(track=TRACK, languages=LANGUAGES, stall_warnings=True):
             try:
                 cache.rpush("mylist",json.dumps(line))
                 count += 1
@@ -49,7 +49,7 @@ while True:
             except redis.exceptions.ConnectionError as exc:
                 print(exc)
                 print("Redis connection error in twitter_to_redis.py.")
-    except twitter.error.TwitterError as e:
+    except Exception as e:
         print(e)
         print("Waiting 90 seconds before trying to reconnect.")
     time.sleep(90)

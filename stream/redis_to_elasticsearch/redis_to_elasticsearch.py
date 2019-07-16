@@ -68,7 +68,7 @@ def bulk_add_to_elastic_search(doc_list):
     data_to_post = '\n'.join(json.dumps(d) for d in es_doc_list) + "\n"
     headers = {"Content-Type": "application/x-ndjson"}
     r = requests.post(ES_URI + ES_INDEX + "/_bulk?pretty", headers=headers, data=data_to_post)
-    return r.json()['errors'], r.json()
+    return r.json()
 
 initalize_es()
 count = 0
@@ -88,8 +88,12 @@ while True:
         for tweet in resp[0]:
             incoming_tweets.append(json.loads(tweet))
         print("Incoming tweets:",len(incoming_tweets))
-        errors, response = bulk_add_to_elastic_search(incoming_tweets)
+        response = bulk_add_to_elastic_search(incoming_tweets)
         count += len(incoming_tweets)
+        try:
+            errors = response['errors']
+        except:
+            errors = True
         if not errors:
             if count > 60:
                 count = 0
@@ -97,6 +101,7 @@ while True:
         else:
             print("Response:",response)
             initalize_es()
+
     except redis.exceptions.ConnectionError as exc:
         if retries == 0:
             raise exc
