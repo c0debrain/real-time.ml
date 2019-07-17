@@ -33,7 +33,7 @@ export class TweetEmbedComponent {
 
   ngOnChanges() {
     if (this.tweetId && !this.pause){
-      if (this.test_tweets.length > 5) {
+      if (this.test_tweets.length > 10) {
         this.test_tweets.shift();
       }
       this.test_tweets.push("twt-" + (1 + this.curr_twt));
