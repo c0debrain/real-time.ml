@@ -95,7 +95,7 @@ const text = {
 function updateTweets(callback) {
     let req_value = "" 
     query_set.forEach(item => {
-        req_value += "{}\n";
+        req_value += "{\"index\" : \"twitter\"}\n";
         req_value += item + "\n";
     });
     request.get(
@@ -104,35 +104,39 @@ function updateTweets(callback) {
             headers: {
                 "Content-Type" : "application/x-ndjson",
             },
+            rejectUnauthorized: false,
             body: req_value,
         },
         function(error, response, body) {
             if (!error && response.statusCode == 200) {
-                body = JSON.parse(body);
-                let counts_all_current = body.responses[0].hits.total.value;
-                let counts_biden_current = body.responses[1].hits.total.value;
-                let counts_trump_current = body.responses[2].hits.total.value;
-                let text_all_current = body.responses[3].hits.hits[0];
-                
-                var current_time = new Date();
-                counts.all.unshift({
-                    date: current_time.toISOString(),
-                    num_tweets: counts_all_current
-                });
-                counts.biden.unshift({
-                    date: current_time.toISOString(),
-                    num_tweets: counts_biden_current
-                });
-                counts.trump.unshift({
-                    date: current_time.toISOString(),
-                    num_tweets: counts_trump_current
-                });
-                text.all.unshift(text_all_current);
-                callback();
+                try {
+                    body = JSON.parse(body);
+                    let counts_all_current = body.responses[0].hits.total.value;
+                    let counts_biden_current = body.responses[1].hits.total.value;
+                    let counts_trump_current = body.responses[2].hits.total.value;
+                    let text_all_current = body.responses[3].hits.hits[0];
+                    
+                    var current_time = new Date();
+                    counts.all.unshift({
+                        date: current_time.toISOString(),
+                        num_tweets: counts_all_current
+                    });
+                    counts.biden.unshift({
+                        date: current_time.toISOString(),
+                        num_tweets: counts_biden_current
+                    });
+                    counts.trump.unshift({
+                        date: current_time.toISOString(),
+                        num_tweets: counts_trump_current
+                    });
+                    text.all.unshift(text_all_current);
+                    callback();
+                } catch (e) {
+                    console.log(e);
+                }
             } else {
-                console.log("Error in tweet count request.");
+                console.log("Error in tweet count requests.");
                 console.log(error);
-                console.log(body);
             }
         }
     );
